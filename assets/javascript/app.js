@@ -73,6 +73,40 @@
         console.log(childsnapshot.val().freq);
         console.log(childsnapshot.val().dateAdded)
        
+       
+        var tFrequency = (childsnapshot.val().freq);
+
+      // Time is 3:30 AM
+        var firstTime = (childsnapshot.val().time);
+
+    // First Time (pushed back 1 year to make sure it comes before current time)
+    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
+
+    // Current Time
+    var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+    // Difference between the times
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    // Time apart (remainder)
+    var tRemainder = diffTime % tFrequency;
+    console.log(tRemainder);
+
+    // Minute Until Train
+    var tMinutesTillTrain = tFrequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    // Next Train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+       
+       
+       
+       
+       
         // Change the HTML to reflect
        // $("#name-display").text(childsnapshot.val().name);
        // $("#role-display").text(childsnapshot.val().role);
@@ -95,30 +129,30 @@
               add.append(name3)
   
               var name4 = $("<td>");
-              name4.text((childsnapshot.val().time) + " mins");
+              name4.text(childsnapshot.val().time);
               add.append(name4)
   
                  
               var name5 = $("<td>");
-              name5.text(childsnapshot.val().freq);
+              name5.text((childsnapshot.val().freq) + " mins");
               add.append(name5)
   
               // need to compute time against current
               var name6 = $("<td>");
-              
+              name6.text(nextTrain)
               
               add.append(name6)
   
                   //need to do math rate*date in months
               var name7 = $("<td>");
               
-              var t = childsnapshot.val().time;
-              var randomFormat = "hh:mm:ss";
-              var tt = moment(t, randomFormat).fromNow();
-              console.log(t)
-              console.log(tt)
-              name7.text(tt)
-              
+         //    var t = childsnapshot.val().time;
+         //     var randomFormat = "hh:mm:ss";
+         //     var tt = moment(t, randomFormat).fromNow();
+         //     console.log(t)
+         //     console.log(tt)
+         //     name7.text(tt)
+              name7.text(tMinutesTillTrain + " mins")
               add.append(name7)
   
   
@@ -159,6 +193,10 @@
         if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
         return i;
       }
+
+      
+
+   
   
       
   
